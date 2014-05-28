@@ -17,11 +17,13 @@ void print_node(Node* node) {
 }
 
 void print_treebf(Node* node) {
-	print_node(node);
-	while (!node->children.empty()) {
+	//print_node(node);
+	if (!node->children.empty()) {
 		list<Node* >::iterator it;
 		for (it=node->children.begin(); it!=node->children.end(); ++it){
-			printf("key %d/n", );
+			//printf("key=%d\n", (*it)->key );
+			print_node(*it);
+			print_treebf(*it);
 		}
 	}
 }
@@ -33,7 +35,7 @@ void create_testtree(Node& root) {
 	Node* child2 = new Node(8,5.2);
 	Node* child3 = new Node(9,3.4);
 
-	Node* child21 = new Node(15,-0.1);
+	Node* child21 = new Node(15,9.1);
 	child2->children.push_back(child21);
 
 	root.children.push_back(child1);
@@ -46,7 +48,7 @@ int main (){
 	Node root;
 	create_testtree(root);
 	print_node(&root);
-	//print_treebf(root)
+	print_treebf(&root);
 
 	return 0;
 }
