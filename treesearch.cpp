@@ -32,17 +32,15 @@ void print_tree_df(Node* node) {
 
 void print_tree_bf(Node* root){
 	queue<Node* > allnodes;
-	list<Node* >::iterator it;
-	for (it = root->children.begin(); 
-		it!= root->children.end(); ++it){
-		allnodes.push(*it);
-	}
+	allnodes.push(root);
+	list<Node* >::const_iterator it;
+
 	while(!allnodes.empty()){
 		Node* node = allnodes.front();
-		print_node(node);
 		allnodes.pop();
-
-		list<Node* >::iterator it;
+		
+		print_node(node);
+		
 		for (it = node->children.begin(); 
 			it!= node->children.end(); ++it){
 			allnodes.push(*it);
@@ -51,8 +49,9 @@ void print_tree_bf(Node* root){
 }	
 
 
-//double find_val(Node* root, int key){
-//}
+Node* find_node(Node* root, int key){
+
+}
 
 void create_testtree(Node& root) {
 	root.key = 5;
