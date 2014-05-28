@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <list>
+#include <queue>
 
 using namespace std;
 
@@ -29,22 +30,29 @@ void print_tree_df(Node* node) {
 	}
 }
 
-void print_tree_bf(Node* node){
-	list<Node* > allnodes = node->children;
-	list<Node* >::iterator it;// = allnodes.begin();
-	
-	for (it = allnodes.begin(); it!= allnodes.end(); ++it){
-		print_node(*it);
-		allnodes.insert(allnodes.end(), 
-			(*it)->children.begin(),
-			(*it)->children.end());
+void print_tree_bf(Node* root){
+	queue<Node* > allnodes;
+	list<Node* >::iterator it;
+	for (it = root->children.begin(); 
+		it!= root->children.end(); ++it){
+		allnodes.push(*it);
 	}
-}
+	while(!allnodes.empty()){
+		Node* node = allnodes.front();
+		print_node(node);
+		allnodes.pop();
+
+		list<Node* >::iterator it;
+		for (it = node->children.begin(); 
+			it!= node->children.end(); ++it){
+			allnodes.push(*it);
+		}
+	}
+}	
 
 
-void find_val(Node* root, int key){
-
-}
+//double find_val(Node* root, int key){
+//}
 
 void create_testtree(Node& root) {
 	root.key = 5;
@@ -66,6 +74,7 @@ int main (){
 	Node root;
 	create_testtree(root);
 	print_node(&root);
+	print_tree_df(&root);
 	print_tree_bf(&root);
 
 	return 0;
