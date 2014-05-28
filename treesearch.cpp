@@ -5,11 +5,26 @@ using namespace std;
 
 class Node {
 public:
+	Node(){}
 	Node(int key, int val):key(key), val(val){}
 	int key;
 	double val;
 	list<Node* > children;
 };
+
+void print_node(Node* node) {
+	printf("key = %d and val = %f \n", node->key, node->val );
+}
+
+void print_treebf(Node* node) {
+	print_node(node);
+	while (!node->children.empty()) {
+		list<Node* >::iterator it;
+		for (it=node->children.begin(); it!=node->children.end(); ++it){
+			printf("key %d/n", );
+		}
+	}
+}
 
 void create_testtree(Node& root) {
 	root.key = 5;
@@ -28,6 +43,10 @@ void create_testtree(Node& root) {
 
 
 int main (){
+	Node root;
+	create_testtree(root);
+	print_node(&root);
+	//print_treebf(root)
 
 	return 0;
 }
