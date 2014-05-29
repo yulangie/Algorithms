@@ -1,11 +1,22 @@
 #include <stdio.h>
 #include <vector>
 #include <limits>
+#include <iostream>
 
 using namespace std;
 
-static const double INF = std::numeric_limits<double>::max();
+static const double INF = std::numeric_limits<int>::max();
 
+void print_vec(vector<double>& v) {
+	//cout << v[2] << " test ";
+	//cout << v.size() << "\n";
+	//printf("size more %d\n",v.size());
+	printf("vector is ");
+	for (int i=0; i< v.size(); ++i) {
+		printf(" %2.2f ", v[i]);
+	}
+	printf("\n");
+}
 
 void print_graph(vector<vector<double> >& A) {
 	int N = A.size();
@@ -45,23 +56,75 @@ void create_graph(vector<vector<double> >& A) {
 	symmetrise(A);
 }
 
-void djkstra(vector<vector<double> >& A, vector<double>& dist, int s) {
-	int N = A.size();
-	vector<bool> done(false);
-	vector<vector<double> > P (N,vector<double>(N));
-	
-	//initial step
-	for (int j=0; j<N; ++j) {
+//void check_neighbours(vector<vector<double> > P, int node) {
+//}
+int get_min(vector<double>& v, vector<bool>& done){
+	//cout << "bool ";
+	for (int i=0; i<done.size();++i){
+		//printf("v[i]%d\n", v[i]);
+		//cout << done[i] << "\n";
+	}
+	int min = INF;
+	int min_i = 0;
+	for (int i=0; i<v.size(); ++i) {
+		
+		if (v[i]<min && done[i]==false) {
+			//printf(" i = %d, v[i]= %2.2f", i, v[i]);
+			min = v[i];
+			min_i = i;
+		}
+	}
+	return min_i;	
+}
+
+void initialise(vector<vector<double> >& P) {
+	printf("size P %d\n", P[0].size());
+	for (int j=0; j<P.size(); ++j) {
 		P[0][j]=INF;
 	}
+
+}
+
+void dijkstra(vector<vector<double> >& A, vector<double>& dist, int s) {
+	int N = A.size();
+	vector<bool> done(N,false);
+	vector<vector<double> > P (N+1,vector<double>(N,INF));
+	
+	//initial step
+	initialise(P);
 	P[0][s]=0;
 	//done[s]=true;
 
 
-	print_graph(P);
+	for (int step=1; step<1+1; ++step){
+
+		int node = get_min(P[step-1], done);
+		cout << "node = " << node << "\n";
+		print_vec(P[node]);
+		for (int j=0; j<N; ++j) {
+			if (done[j] == false) {
+			//if (A[node][j] > 0 && done[j] == false) {
+				int new_dist = P[step-1][node] + A[node][j]; 
+
+				P[step][j] = (new_dist < P[step-1][j]) ? new_dist : P[step-1][j];
+				cout << "get here \n";
+			}
+			done[node]=true;
+		}
+		//cout << "step = " << step << " \n";
+		cout << " P[step][3] " << P[step][3] << "\n ";
+		print_vec(P[node]);
+	}
+
+	for(int i=0; i<done.size(); ++i) {
+		cout << "done = " << done[i];
+	}
+	cout << "\n";
+	//print_graph(P);
 	//find shorte
 
 }
+
 
 int main() {
 	int N = 6;
@@ -69,6 +132,9 @@ int main() {
 	create_graph(A);
 	print_graph(A);
 	vector<double> dist(N,INF);
-	djkstra(A,dist,1);
+	//cout << " print " << &A[0] << "\n";
+	//cout << " print " << &A[0][0] << "\n";
+	//print_vec( (A[0]) ) ;
+	dijkstra(A,dist,1);
 	//printf(" %f ", INF);
 }
