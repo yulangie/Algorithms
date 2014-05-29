@@ -7,7 +7,7 @@ using namespace std;
 static const double INF = std::numeric_limits<double>::max();
 
 
-void print_graph(vector<vector<double> >& A) {
+void print_graph(vector<vector<double> >& A) { // how about using  const vector<vector<double> >&
 	int N = A.size();
 	//printf("%d \n",N);
 	for (int i=0; i<N; ++i) {
