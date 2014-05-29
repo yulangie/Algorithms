@@ -12,7 +12,12 @@ void print_graph(vector<vector<double> >& A) {
 	//printf("%d \n",N);
 	for (int i=0; i<N; ++i) {
 		for (int j=0; j<N; ++j) {
-			printf(" %2.1f ", A[i][j]);
+			if(A[i][j]==INF){
+				printf(" %2.1f ",-1.);
+			}
+			else{
+				printf(" %2.1f ", A[i][j]);
+			}
 		}	
 		printf("\n");
 	}
@@ -50,7 +55,7 @@ void djkstra(vector<vector<double> >& A, vector<double>& dist, int s) {
 		P[0][j]=INF;
 	}
 	P[0][s]=0;
-	done[s]=true;
+	//done[s]=true;
 
 
 	print_graph(P);
