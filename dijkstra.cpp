@@ -42,7 +42,7 @@ void create_graph(vector<vector<double> >& A) {
 	A[3][1]=0.7;
 	A[3][4]=0.3;
 	A[4][1]=2.0;
-	symmetrise(A); // this relies on the other entries being set to 0 beforehand. maybe this should happen within this function?
+	symmetrise(A);
 }
 
 void djkstra(vector<vector<double> >& A, vector<double>& dist, int s) {
