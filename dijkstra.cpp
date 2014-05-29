@@ -6,13 +6,6 @@ using namespace std;
 
 static const double INF = std::numeric_limits<double>::max();
 
-struct Vertex{
-	int v;
-	double d;
-	int prev;
-	bool done;
-};
-
 
 void print_graph(vector<vector<double> >& A) {
 	int N = A.size();
@@ -47,7 +40,20 @@ void create_graph(vector<vector<double> >& A) {
 	symmetrise(A);
 }
 
-void djkstra(vector<vector<double> >& A, int s) {
+void djkstra(vector<vector<double> >& A, vector<double>& dist, int s) {
+	int N = A.size();
+	vector<bool> done(false);
+	vector<vector<double> > P (N,vector<double>(N));
+	
+	//initial step
+	for (int j=0; j<N; ++j) {
+		P[0][j]=INF;
+	}
+	P[0][s]=0;
+	done[s]=true;
+
+
+	print_graph(P);
 	//find shorte
 
 }
@@ -57,5 +63,7 @@ int main() {
 	vector<vector<double> > A (N,vector<double>(N,0));
 	create_graph(A);
 	print_graph(A);
+	vector<double> dist(N,INF);
+	djkstra(A,dist,1);
 	//printf(" %f ", INF);
 }
