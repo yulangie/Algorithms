@@ -11,7 +11,7 @@ void print_vec(vector<double>& v) {
 	//cout << v[2] << " test ";
 	//cout << v.size() << "\n";
 	//printf("size more %d\n",v.size());
-	printf("vector is ");
+	//printf("vector is ");
 	for (int i=0; i< v.size(); ++i) {
 		printf(" %2.2f ", v[i]);
 	}
@@ -56,14 +56,8 @@ void create_graph(vector<vector<double> >& A) {
 	symmetrise(A);
 }
 
-//void check_neighbours(vector<vector<double> > P, int node) {
-//}
+
 int get_min(vector<double>& v, vector<bool>& done){
-	//cout << "bool ";
-	for (int i=0; i<done.size();++i){
-		//printf("v[i]%d\n", v[i]);
-		//cout << done[i] << "\n";
-	}
 	int min = INF;
 	int min_i = 0;
 	for (int i=0; i<v.size(); ++i) {
@@ -78,51 +72,45 @@ int get_min(vector<double>& v, vector<bool>& done){
 }
 
 void initialise(vector<vector<double> >& P) {
-	printf("size P %d\n", P[0].size());
 	for (int j=0; j<P.size(); ++j) {
 		P[0][j]=INF;
 	}
 
 }
 
-void dijkstra(vector<vector<double> >& A, vector<double>& dist, int s) {
+vector<double> dijkstra(vector<vector<double> >& A, int s) {
 	int N = A.size();
 	vector<bool> done(N,false);
-	vector<vector<double> > P (N+1,vector<double>(N,INF));
+	vector<vector<double> > P (N+1,vector<double>(N));
 	
 	//initial step
 	initialise(P);
-	P[0][s]=0;
+	P[0][s]=0.;
 	//done[s]=true;
 
 
-	for (int step=1; step<1+1; ++step){
+	for (int step=1; step<N+1; ++step){
 
 		int node = get_min(P[step-1], done);
-		cout << "node = " << node << "\n";
-		print_vec(P[node]);
+		done[node]=true;
+
 		for (int j=0; j<N; ++j) {
-			if (done[j] == false) {
-			//if (A[node][j] > 0 && done[j] == false) {
-				int new_dist = P[step-1][node] + A[node][j]; 
-
+			P[step][j]=P[step-1][j];
+	
+			if (done[j] == false && A[node][j]>0) {
+			
+				double new_dist = P[step-1][node] + A[node][j]; 
+				//printf(" j = %d new_dist = %2.2f\n", j, new_dist);
 				P[step][j] = (new_dist < P[step-1][j]) ? new_dist : P[step-1][j];
-				cout << "get here \n";
 			}
-			done[node]=true;
 		}
-		//cout << "step = " << step << " \n";
-		cout << " P[step][3] " << P[step][3] << "\n ";
-		print_vec(P[node]);
+		// output the contect of matrix P at each step
+		printf("step = %d and P[%d] = ", step, step);
+		print_vec(P[step]);
+
 	}
 
-	for(int i=0; i<done.size(); ++i) {
-		cout << "done = " << done[i];
-	}
-	cout << "\n";
-	//print_graph(P);
-	//find shorte
-
+	return P[N];
 }
 
 
@@ -130,11 +118,12 @@ int main() {
 	int N = 6;
 	vector<vector<double> > A (N,vector<double>(N,0));
 	create_graph(A);
+	printf("The adjacency matrix is\n");
 	print_graph(A);
-	vector<double> dist(N,INF);
-	//cout << " print " << &A[0] << "\n";
-	//cout << " print " << &A[0][0] << "\n";
-	//print_vec( (A[0]) ) ;
-	dijkstra(A,dist,1);
-	//printf(" %f ", INF);
+	
+	//vector<double> distance(N); 
+	int node = 5;
+	vector<double> distance = dijkstra(A,node);
+	printf("The shortest distance from node %d to all nodes is: \n", node);
+	print_vec(distance);
 }
