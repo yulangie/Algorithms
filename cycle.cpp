@@ -27,7 +27,7 @@ void fill_adjacencylist(vector<list<int> >& nodes) {
 	nodes[3].push_back(2);
 	nodes[3].push_back(4);
 
-	//nodes[4].push_back(7);
+	nodes[4].push_back(7);
 
 	nodes[5].push_back(6);
 	nodes[5].push_back(3);
@@ -37,14 +37,17 @@ void fill_adjacencylist(vector<list<int> >& nodes) {
 
 bool find(int node, vector<bool>& visited, vector<list<int> >& nodes){
 	if (visited[node]) {
-		printf("get here");
+		printf("for node %d is node.neigb empty? %d\n", node, 
+			nodes[node].empty());
 		return (! nodes[node].empty() ) ? true : false;
 	}
 
 	visited[node]=true;
 
-	for(int neigh=0; neigh < nodes[node].size(); ++neigh) {
-		bool found = find(neigh, visited, nodes);
+	list<int>::const_iterator cit;
+	for(cit = nodes[node].begin(); cit != nodes[node].end(); ++cit) {
+		printf("neigh =  %d of node %d\n", *cit, node);
+		bool found = find(*cit, visited, nodes);
 		if (found) {
 			return true;
 		}
