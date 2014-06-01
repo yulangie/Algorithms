@@ -4,9 +4,9 @@
 
 using namespace std;
 
-void print_adjancylist(vector<list<int> >& nodes){
+void print_adjancylist(vector<list<int> >& nodes){ // const
 	for (int i=0; i<nodes.size(); ++i) {
-		list<int>::iterator it;
+		list<int>::iterator it;		// const_iterator
 		printf(" node = %d -----> ", i );	
 		for (it = nodes[i].begin(); it != nodes[i].end(); ++it ){
 			printf( " %d ", *it);
@@ -17,7 +17,10 @@ void print_adjancylist(vector<list<int> >& nodes){
 
 }
 
-void fill_adjacencylist(vector<list<int> >& nodes) {
+void fill_adjacencylist(vector<list<int> >& nodes) { 
+	// es ist vielleicht nicht so schoen dass die funktion annahmen daruber macht wieviele eintraege nodes vorher hatte
+	// vielleicht koennte man folgendes zu anfang aufrufen: nodes.resize(8, list<int>());
+	// und dann brauch der aufrufer (main() ) nur vector<list<int> > anlegen, braucht es noch nicht initialisieren mit werten
 	nodes[0].push_back(1);
 	nodes[0].push_back(7);
 
@@ -38,7 +41,7 @@ void fill_adjacencylist(vector<list<int> >& nodes) {
 	nodes[7].push_back(0);
 }
 
-bool find(int node, vector<int>& status, vector<list<int> >& nodes){
+bool find(int node, vector<int>& status, const vector<list<int> >& nodes){
 	/* If status = -1, it means this node is visited, and
 	all paths starting from this node dont have a cycle.
 	If status = 1, it means it was visited, therefore, if encountered 
@@ -66,7 +69,7 @@ bool find(int node, vector<int>& status, vector<list<int> >& nodes){
 
 }
 
-bool cycle_exist(vector<list<int> >& nodes) {
+bool cycle_exist(const vector<list<int> >& nodes) {
 	vector<int> status(nodes.size(), 0);
 	for (int node=0; node<nodes.size(); ++node){
 		if ( find(node, status, nodes) ){
