@@ -24,9 +24,12 @@ void fill_adjacencylist(vector<list<int> >& nodes) {
 	nodes[1].push_back(2);
 	nodes[1].push_back(3);
 
+	nodes[2].push_back(7);
+
 	nodes[3].push_back(2);
 	nodes[3].push_back(4);
 
+	nodes[4].push_back(2);
 	nodes[4].push_back(7);
 
 	nodes[5].push_back(6);
@@ -36,11 +39,10 @@ void fill_adjacencylist(vector<list<int> >& nodes) {
 }
 
 bool find(int node, vector<int>& status, vector<list<int> >& nodes){
-	//if (visited[node]) {
-	//	printf("Q: Does node %d has neighbours ? %s\n", node, 
-	//		nodes[node].empty() ? "yes" : "no");
-	//	return (! nodes[node].empty() ) ? true : false;
-	//}
+	/* If status = -1, it means this node is visited, and
+	all paths starting from this node dont have a cycle.
+	If status = 1, it means it was visited, therefore, if encountered 
+	again, a cycle exist*/
 	if (status[node]==-1){
 		return false;
 	}
@@ -49,8 +51,8 @@ bool find(int node, vector<int>& status, vector<list<int> >& nodes){
 	}
 
 	status[node]=1;
-	//visited[node]=true;
 
+	/*traverse the neighbours via deap first first searchgit*/
 	list<int>::const_iterator cit;
 	for(cit = nodes[node].begin(); cit != nodes[node].end(); ++cit) {
 		printf("neigh =  %d of node %d\n", *cit, node);
@@ -67,7 +69,6 @@ bool find(int node, vector<int>& status, vector<list<int> >& nodes){
 bool cycle_exist(vector<list<int> >& nodes) {
 	vector<int> status(nodes.size(), 0);
 	for (int node=0; node<nodes.size(); ++node){
-		//vector<bool> visited (nodes.size(),false);
 		if ( find(node, status, nodes) ){
 			return true;
 		} 
