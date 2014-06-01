@@ -37,8 +37,8 @@ void fill_adjacencylist(vector<list<int> >& nodes) {
 
 bool find(int node, vector<bool>& visited, vector<list<int> >& nodes){
 	if (visited[node]) {
-		printf("for node %d is node.neigb empty? %d\n", node, 
-			nodes[node].empty());
+		printf("Q: Does node %d has neighbours ? %s\n", node, 
+			nodes[node].empty() ? "yes" : "no");
 		return (! nodes[node].empty() ) ? true : false;
 	}
 
@@ -73,7 +73,7 @@ int main(){
 	print_adjancylist(nodes);
 
 	bool cycle = cycle_exist(nodes);
-	printf("Does a cycle exist? Answer is  %d\n", cycle);
+	printf("Q: does a cycle exist? A: %s\n", cycle ? "yes" : "no");
 
 	return 0;
 }
