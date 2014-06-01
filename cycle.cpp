@@ -18,9 +18,8 @@ void print_adjancylist(vector<list<int> >& nodes){ // const
 }
 
 void fill_adjacencylist(vector<list<int> >& nodes) { 
-	// es ist vielleicht nicht so schoen dass die funktion annahmen daruber macht wieviele eintraege nodes vorher hatte
-	// vielleicht koennte man folgendes zu anfang aufrufen: nodes.resize(8, list<int>());
-	// und dann brauch der aufrufer (main() ) nur vector<list<int> > anlegen, braucht es noch nicht initialisieren mit werten
+	nodes.resize(8, list<int>());
+	
 	nodes[0].push_back(1);
 	nodes[0].push_back(7);
 
@@ -80,8 +79,7 @@ bool cycle_exist(const vector<list<int> >& nodes) {
 }
 
 int main(){
-	int N = 8;
-	vector<list<int> > nodes(N, list<int> ());
+	vector<list<int> > nodes;
 	fill_adjacencylist(nodes);
 	print_adjancylist(nodes);
 
